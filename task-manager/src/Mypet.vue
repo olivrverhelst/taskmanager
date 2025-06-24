@@ -8,9 +8,12 @@ import { ref } from 'vue'
     <div>
       <h1>My pet</h1>
     </div>
-    <div class="mb-3">
-      <h1>{{petname}}</h1>
-    </div>
+    <div class="card" style="width: 18rem;">
+  <img src="/pet.jpg" class="card-img-top" alt="pet mascot">
+  <div class="card-body">
+    <p class="card-text"> {{ petname }}</p>
+  </div>
+</div>
     
     <div class="mb-3">
       <div class="progress">
