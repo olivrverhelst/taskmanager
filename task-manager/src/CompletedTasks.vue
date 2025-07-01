@@ -1,19 +1,33 @@
 <script setup>
 import { ref, onMounted } from 'vue' 
 import { formatDate } from './composables/formattime'
+import { currentUser } from './composables/auth' // <-- Add this
 const completedTasks = ref([])
 
 onMounted(async () => {
+  const userId = currentUser.value?.id
+  if (!userId) {
+    console.warn('User not logged in')
+    return
+  }
+
   try {
-    const res = await fetch('http://localhost:3000/tasks')
+    const res = await fetch(`http://localhost:3000/tasks?user_id=${userId}`)
     const data = await res.json()
-    // Filter only completed tasks
+
+    if (!Array.isArray(data)) {
+      console.error('Unexpected response:', data)
+      return
+    }
+
+    // ✅ Filter only completed tasks
     completedTasks.value = data.filter(task => task.completed === 1)
   } catch (error) {
     console.error('Failed to fetch completed tasks:', error)
   }
 })
 </script>
+
 
 <template>
   <main>
@@ -25,7 +39,7 @@ onMounted(async () => {
           <th>Description</th>
           <th>Due Date</th>
           <th>Duration</th>
-          <th>Completed At</th>
+          <th>Difficulty</th>
         </tr>
       </thead>
       <tbody>
@@ -34,7 +48,7 @@ onMounted(async () => {
           <td>{{ task.description }}</td>
           <td>{{ formatDate(task.due_date) }}</td>
           <td>{{ task.duration_value }} {{ task.duration_unit }}</td>
-          <td>{{ formatDate(task.completedAt) }}</td>
+          <td>{{ task.difficulty }}</td>
         </tr>
       </tbody>
     </table>

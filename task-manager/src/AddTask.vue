@@ -9,8 +9,9 @@ const taskDesc = ref('')
 const date = ref(null)
 const durationValue = ref('')
 const durationUnit = ref('')
-
-const submitForm = useAddTask(taskName, taskDesc, date, durationValue, durationUnit)
+const difficulty = ref('')
+const today = new Date()
+const submitForm = useAddTask(taskName, taskDesc, date, durationValue, durationUnit, difficulty)
 </script>
 
 <template>
@@ -31,7 +32,7 @@ const submitForm = useAddTask(taskName, taskDesc, date, durationValue, durationU
     </div>
     <div class="mb-3">
       <label class="form-label">Due date</label>
-      <Datepicker v-model="date" class="form-control" placeholder="Select due date"/>
+      <Datepicker v-model="date" :min-date="today" class="form-control" placeholder="Select due date"/>
     </div>
     <div>
       <label for="customRange2" class="form-label">Expected time needed</label>
@@ -50,7 +51,17 @@ const submitForm = useAddTask(taskName, taskDesc, date, durationValue, durationU
       <option value="days">Days</option>
       <option value="weeks">Weeks</option>
     </select>
-    </div><br>
+  <div class="mb-3">
+    <br>
+      <label for="Input" class="form-label">Difficulty</label>
+      <div class="radio-group">
+    <label v-for="num in 5" :key="num" class="radio-label">
+      <input type="radio" name="rating" :value="num" v-model="difficulty" />
+      {{ num }}
+    </label>
+  </div>
+    </div>  
+  </div><br>
     <button type="submit" class="btn btn-primary">Submit</button>
   </fieldset>
 </form>
@@ -61,4 +72,18 @@ const submitForm = useAddTask(taskName, taskDesc, date, durationValue, durationU
   </main>
 </template>
 <style scoped>
+.radio-group {
+  display: flex;
+  gap: 1rem; /* space between buttons */
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radio-label input[type="radio"] {
+  margin-right: 0.3rem;
+}
 </style>
