@@ -4,5 +4,8 @@ import navbar from './components/navbar.vue'
 
 <template>
   <navbar />
-  <router-view />
+  <br>
+  <div class="centered-content">
+    <router-view />
+  </div>
 </template>

@@ -70,13 +70,6 @@ async function handleLogin() {
         <label class="form-label" for="password">Password</label>
       </div>
 
-      <!-- Forgot password link -->
-      <div class="row mb-4">
-        <div class="col">
-          <a href="#!">Forgot password?</a>
-        </div>
-      </div>
-
       <!-- Submit button -->
       <button
         type="submit"
